@@ -1,0 +1,51 @@
+---
+swagger: "2.0"
+info:
+  description: "#### Sensors Web Service \nGet data from mongoDb \n"
+  version: "0.0.1"
+  title: "Echo"
+basePath: "/v0"
+schemes:
+- "http"
+paths:
+  /sensors:
+    get:
+      operationId: "sensorsGET"
+      parameters: []
+      responses:
+        200:
+          description: "An array of sensors"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/Sensor"
+      x-swagger-router-controller: "Default"
+  /sensor/{id}:
+    get:
+      operationId: "sensorIdGET"
+      parameters:
+      - name: "id"
+        in: "path"
+        description: "ID"
+        required: true
+        type: "string"
+      responses:
+        200:
+          description: "Get a sensor"
+          schema:
+            type: "object"
+            properties: {}
+      x-swagger-router-controller: "Default"
+definitions:
+  Sensor:
+    type: "object"
+    properties:
+      sensor_id:
+        type: "string"
+        description: "Unique identifier of a sensor"
+      name:
+        type: "string"
+        description: "Name of a sensor."
+      type:
+        type: "string"
+        description: "Type of sensor."
