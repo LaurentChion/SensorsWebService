@@ -1,12 +1,12 @@
 var mongoose   = require("mongoose");
-var connection = mongoose.connect('mongodb://localhost:27017/InternetOfStuff');
+var connection = mongoose.connect('mongodb://mongodb:27017/InternetOfStuff');
 
 var log4js = require('log4js')
 var logger = log4js.getLogger('dbLogger')
 
 // When successfully connected
 mongoose.connection.on('connected', function () {
-  logger.info('Connected to database at ' + 'mongodb://localhost:27017/InternetOfStuff');
+  logger.info('Connected to database at ' + 'mongodb://mongodb:27017/InternetOfStuff');
 });
 
 // If the connection throws an error
