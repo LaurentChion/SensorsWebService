@@ -3,7 +3,7 @@ swagger: "2.0"
 info:
   description: "#### Sensors Web Service \nGet data from mongoDb \n"
   version: "0.0.1"
-  title: "Echo"
+  title: "SensorsWebService"
 basePath: "/v0"
 schemes:
 - "http"
@@ -28,6 +28,15 @@ paths:
         in: "path"
         description: "ID"
         required: true
+        type: "string"
+      - name: "date"
+        in: "query"
+        description: "Begining of the interval."
+        type: "string"
+        format: "date"
+      - name: "time"
+        in: "query"
+        description: "Time : can be an hour, a day, a month ..."
         type: "string"
       responses:
         200:

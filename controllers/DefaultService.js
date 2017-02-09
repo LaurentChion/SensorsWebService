@@ -4,18 +4,65 @@ let Sensor = require("../model/Sensor");
 let Measure = require("../model/Measure");
 
 exports.sensorIdGET = function(args, res, next) {
+  let dateDebut = args.date.value;
+  let dateFin;
+  let time = args.time.value;
+  let timeIsDefine = false;
 
-  const sensors = mongoose.models.Measure.find({sensor_id: args.id.value},
-    (err, data) => {
-      if (err) {
-        throw err;
+  if( typeof dateDebut === 'undefined') {
+    dateDebut = new Date();
+  }
+  else {
+    dateFin = new Date(dateDebut);
+    dateDebut = new Date(dateDebut);
+
+    if (typeof time !== 'undefined') {
+      if (time === 'day') {
+        timeIsDefine = true;
+        dateFin.setDate(dateFin.getDate() + 1);
+        console.log(dateFin);
       }
-      res.setHeader('Content-Type', 'application/json');
-
-      console.log(JSON.stringify(data));
-      res.end(JSON.stringify(data));
+      else if (time === 'hour'){
+        timeIsDefine = true;
+        dateFin.setHours(dateFin.getHours() + 1);
+        console.log(dateFin);
+      }
     }
-  );
+  }
+
+  if (timeIsDefine) {
+    mongoose.models.Measure.find(
+      {
+        sensor_id: args.id.value,
+        date: {
+          $gt: dateDebut,
+          $lt: dateFin,
+        },
+      },
+      (err, data) => {
+        if (err) {
+          throw err;
+        }
+        res.setHeader('Content-Type', 'application/json');
+        res.end(JSON.stringify(data));
+      }
+    );
+  }
+  else {
+    mongoose.models.Measure.find(
+      {
+        sensor_id: args.id.value,
+        date: { $gt: dateDebut },
+      },
+      (err, data) => {
+        if (err) {
+          throw err;
+        }
+        res.setHeader('Content-Type', 'application/json');
+        res.end(JSON.stringify(data));
+      }
+    );
+  }
 }
 
 exports.sensorsGET = function(args, res, next) {
