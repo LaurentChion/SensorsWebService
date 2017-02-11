@@ -20,12 +20,14 @@ exports.sensorIdGET = function(args, res, next) {
       if (time === 'day') {
         timeIsDefine = true;
         dateFin.setDate(dateFin.getDate() + 1);
-        console.log(dateFin);
       }
       else if (time === 'hour'){
         timeIsDefine = true;
         dateFin.setHours(dateFin.getHours() + 1);
-        console.log(dateFin);
+      }
+      else if (time === 'week'){
+        timeIsDefine = true;
+        dateFin.setDate(dateFin.getDate() + 7);
       }
     }
   }
